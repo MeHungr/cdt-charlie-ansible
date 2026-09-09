@@ -1,0 +1,8 @@
+- name: Install necessary packages
+  ansible.builtin.apt:
+    name: 
+      - samba
+      - samba-common-bin
+      - smbclient
+    state: present
+    update_cache: true
