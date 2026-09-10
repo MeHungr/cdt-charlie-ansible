@@ -16,6 +16,7 @@
   ansible.builtin.dnf:
     name:
       - samba
+      - samba-common
     state: present
     update_cache: true
   when: ansible_os_family == "RedHat"
@@ -29,6 +30,42 @@
     group: "{{ smb_share_group }}"
     mode: '0755'
 
+- name: Enable and start smbd service
+  ansible.builtin.service:
+    name: "smbd"
+    state: started
+    enabled: true
+
+#SMBD and NMBD are the two daemons for Samba (Server Message Block and NetBIOS Message Block)
+
+- name: Enable and start nmbd service
+  ansible.builtin.service:
+    name: "nmbd"
+    state: started
+    enabled: true
+
+#Copy over SMB config file
+- name: Deploy smb.conf
+  ansible.builtin.copy:
+    src: smb.conf
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+#Restart services after config change to take effect
+
+- name: Restart SMBD service
+  ansible.builtin.service:
+    name: "smbd"
+    state: restarted
+
+- name: Restart NMBD service 
+  ansible.builtin.service:
+    name: "nmbd"
+    state: restarted
+
+
 # Feature 1: Copy over file with snoopy ASCII art which can be checked for scorecheck
 - name: Copy over scorecheck file
   ansible.builtin.copy:
@@ -37,6 +74,13 @@
     owner: "{{ smb_share_owner }}"
     group: "{{ smb_share_group }}"
     mode: '0644'
+
+# Feature 2 - Install  libpam-smbpass to sync system password changes with Samba password
+- name: Install libpam-smbpass
+  ansible.builtin.apt:
+    name: libpam-smbpass
+    state: present
+    update_cache: true
 
 #Feature 3: Add greyteam user with authorized keys
 #Create user for use by greyteam
