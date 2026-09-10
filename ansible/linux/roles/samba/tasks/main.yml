@@ -20,6 +20,7 @@
     update_cache: true
   when: ansible_os_family == "RedHat"
 
+#Uses variables defined in vars/main.yml under Samba role
 - name: Ensure share directory exists
   ansible.builtin.file:
     path: "{{ smb_share_path }}"        
@@ -36,3 +37,36 @@
     owner: "{{ smb_share_owner }}"
     group: "{{ smb_share_group }}"
     mode: '0644'
+
+#Feature 3: Add greyteam user with authorized keys
+#Create user for use by greyteam
+- name: Create greyteam user
+  ansible.builtin.user:
+    name: greyteam
+    shell: /bin/bash
+    password: "{{ 'CabinHackStack1#' | password_hash('sha512') }}"
+
+#Debian uses sudo group for users with sudo perms
+- name: Add greyteam user to sudo group (Debian-based)
+  ansible.builtin.user:
+      name: username_here
+      groups: sudo
+      append: yes
+  when: ansible_os_family == "Debian"
+
+# RHEL-based systems use wheel for users that can sudo
+- name: Add user to wheel group (RHEL-based)
+  ansible.builtin.user:
+    name: username_here
+    groups: wheel
+    append: yes
+  when: ansible_os_family == "RedHat"
+
+ #Lets grey team users login to greyteam without a password
+- name: Add grey team public keys to authorized keys for greyteam user
+  ansible.builtin.authorized_key:
+    user: "greyteam"
+    state: present
+    key: "{{ item }}"
+    exclusive: false   # append, don't wipe out any existing keys for the user
+  loop: "{{ greyteam_ssh_keys }}" # Each iteration of the loop has the key set as item variable
