@@ -1,0 +1,8 @@
+# Main playbook for running all of the different Linux roles for setting up the competition
+# To use: add a task for running your role (see Samba for example) and then run the command: ansible-playbook linux.yml -i inventory.ini
+
+- name: Deploy Samba  
+  hosts: samba
+  become: true
+  roles:
+    - samba

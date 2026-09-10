@@ -1,7 +1,0 @@
-# Main playbook for running all of the different roles for setting up the competition
-
-- name: Deploy Samba  
-  hosts: samba
-  become: true
-  roles:
-    - samba
