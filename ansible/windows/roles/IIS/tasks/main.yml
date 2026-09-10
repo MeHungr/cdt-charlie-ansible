@@ -1,1 +1,12 @@
+# Benjamin Imbriaco, bhi1158@rit.edu, 09/09/2026
+---
+# Installing IIS to a remote Windows Host
+-   name: Install IIS
+    hosts: windows
+    tasks:
 
+    - name: Install IIS
+      ansible.windows.win_feature:
+        name: Web-Server
+        state: present
+        include_management_tools: yes
