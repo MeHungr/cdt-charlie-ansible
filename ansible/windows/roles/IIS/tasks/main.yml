@@ -1,12 +1,20 @@
 # Benjamin Imbriaco, bhi1158@rit.edu, 09/09/2026
 ---
-# Installing IIS to a remote Windows Host
--   name: Install IIS
+# The purpose of this script is to install IIS on a remote Windows
+# host and showcase three features/utilities that Ansible has
+-   name: Install IIS and features
     hosts: windows
     tasks:
 
+# This is the initial install task
     - name: Install IIS
       ansible.windows.win_feature:
         name: Web-Server
         state: present
         include_management_tools: yes
+
+# Feature #1 -> Hosting a web page on the web server
+    - name: host local index.html file
+      ansible.windows.win_copy:
+        src: files/index.html
+        dest: C:\inetpub\wwwroot\index.html
