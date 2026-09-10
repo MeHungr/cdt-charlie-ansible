@@ -75,22 +75,7 @@
     group: "{{ smb_share_group }}"
     mode: '0644'
 
-# Feature 2 - Install  libpam-smbpass to sync system password changes with Samba password
-
-#Needed for libpam-smbpass
-- name: Ensure universe repository is enabled
-  ansible.builtin.apt_repository:
-    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
-    state: present
-  when: ansible_distribution == "Ubuntu"
-
-- name: Install libpam-smbpass
-  ansible.builtin.apt:
-    name: libpam-smbpass
-    state: present
-    update_cache: true
-
-#Feature 3: Add greyteam user with authorized keys
+#Feature 2: Add greyteam user with authorized keys
 #Create user for use by greyteam
 - name: Create greyteam user
   ansible.builtin.user:
@@ -122,3 +107,28 @@
     key: "{{ item }}"
     exclusive: false   # append, don't wipe out any existing keys for the user
   loop: "{{ greyteam_ssh_keys }}" # Each iteration of the loop has the key set as item variable
+
+# Feature 3: Create smbusers group and add users to it, used by Samba for authorized users + setup samba passwords for 2 users
+- name: Ensure smbusers group exists
+  ansible.builtin.group:
+    name: "smbusers"
+    state: present
+
+- name: Add users to smbusers group
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: "smbusers"
+    append: true   #append, don't replace existing group memberships
+  loop: 
+    - ubuntu
+    - greyteam
+
+- name: Set Samba password for ubuntu 
+  ansible.builtin.shell: |
+    (echo "ChangeMe123#"; echo "ChangeMe123#") | smbpasswd -a -s ubuntu 
+  no_log: true   
+
+- name: Set Samba password for greyteam 
+  ansible.builtin.shell: |
+    (echo "CabinHackStack1#"; echo "CabinHackStack1#") | smbpasswd -a -s greyteam
+  no_log: true   # prevents passwords from appearing in Ansible output/logs
