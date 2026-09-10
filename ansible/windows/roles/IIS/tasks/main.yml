@@ -13,7 +13,10 @@
         state: present
         include_management_tools: yes
 
-# Feature #1 -> Hosting a web page on the web server using win_copy
+# Feature #1 -> Hosting a web page on the web server using win_copy.
+# for redeployment, make sure you have an index.html file located in
+# a files/ directory (same with .png file if applicable), so that
+# ansible can find the index.html file when running this script
     - name: host local index.html file
       ansible.windows.win_copy:
         src: files/index.html
