@@ -1,4 +1,8 @@
-- name: Install necessary packages
+---
+# Samba Deployment
+# Author: Braeden Villano (bcv4079@rit.edu)
+# Date: 9/10/2026
+- name: Install necessary packages (Debian/Ubuntu)
   ansible.builtin.apt:
     name: 
       - samba
@@ -6,3 +10,29 @@
       - smbclient
     state: present
     update_cache: true
+  when: ansible_os_family == "Debian"
+
+- name: Install necessary packages (Red Hat and RHEL-like)
+  ansible.builtin.dnf:
+    name:
+      - samba
+    state: present
+    update_cache: true
+  when: ansible_os_family == "RedHat"
+
+- name: Ensure share directory exists
+  ansible.builtin.file:
+    path: "{{ smb_share_path }}"        
+    state: directory
+    owner: "{{ smb_share_owner }}"
+    group: "{{ smb_share_group }}"
+    mode: '0755'
+
+# Feature 1: Copy over file with snoopy ASCII art which can be checked for scorecheck
+- name: Copy over scorecheck file
+  ansible.builtin.copy:
+    src: snoopy.txt
+    dest: "{{ smb_share_path }}/snoopy.txt"
+    owner: "{{ smb_share_owner }}"
+    group: "{{ smb_share_group }}"
+    mode: '0644'

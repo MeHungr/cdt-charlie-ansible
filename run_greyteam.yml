@@ -1,0 +1,7 @@
+# Main playbook for running all of the different roles
+
+- name: Deploy Samba  
+  hosts: samba
+  become: true
+  roles:
+    - samba
