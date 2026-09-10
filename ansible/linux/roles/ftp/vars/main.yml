@@ -1,0 +1,6 @@
+---
+# FTP Configuration Variables
+
+ftp_package: vsftpd
+ftp_service: vsftpd
+ftp_config: /etc/vsftpd.conf

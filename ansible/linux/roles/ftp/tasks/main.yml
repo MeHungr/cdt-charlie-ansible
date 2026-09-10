@@ -1,0 +1,29 @@
+---
+# Service: FTP
+# Name: Ryan Tagen
+# Email: rst4035@rit.edu
+# Date: 09-10-2026
+
+# Feature 1: Installation
+- name: Install vsftpd
+  ansible.builtin.apt:
+    name: "{{ ftp_package }}"
+    state: present
+    update_cache: true
+
+# Feature 2: Configuration
+- name: Configure vsftpd
+  ansible.builtin.copy:
+    src: vsftpd.conf
+    dest: "{{ ftp_config }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart FTP service
+
+# Feature 3: Start and enable the FTP service
+- name: Start and enable FTP service
+  ansible.builtin.service:
+    name: "{{ ftp_service }}"
+    state: started
+    enabled: true
