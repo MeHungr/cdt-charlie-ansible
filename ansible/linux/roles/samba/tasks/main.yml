@@ -76,6 +76,14 @@
     mode: '0644'
 
 # Feature 2 - Install  libpam-smbpass to sync system password changes with Samba password
+
+#Needed for libpam-smbpass
+- name: Ensure universe repository is enabled
+  ansible.builtin.apt_repository:
+    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
 - name: Install libpam-smbpass
   ansible.builtin.apt:
     name: libpam-smbpass
