@@ -26,7 +26,7 @@ To deploy, run the linux.yml playbook for the tag ssh, using the command:
 ansible-playbook linux.yml -i <PATH TO INVENTORY FILE> -t ssh
 ```
 
-## pam role
+## PAM
 Author: Willis Martin (wrm3207@rit.edu)  
 Enforces password complexity and aging policy via PAM, and manages a set of accounts includes create required ones and lock stale/unauthorized ones.
 
