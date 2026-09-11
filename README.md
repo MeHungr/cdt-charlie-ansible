@@ -32,7 +32,7 @@ Enforces password complexity and aging policy via PAM, and manages a set of acco
 
 ### Requirements
 - Debian/Ubuntu target (need becuase of apt, package libpam-pwquality, and PAM config expected at
-  /etc/pam.d/common-password). 
+/etc/pam.d/common-password). 
 
 ### Before running
 Edit vars/main.yml:
@@ -42,7 +42,7 @@ Edit vars/main.yml:
 
 ### Usage
 ```
-ansible-playbook -i inventory site.yml --limit linux_targets --tags pam
+ansible-playbook linux.yml -i <PATH TO INVENTORY FILE> -t pam
 ```
 
 ### Features demonstrated

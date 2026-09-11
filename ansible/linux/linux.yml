@@ -17,3 +17,11 @@
     -  ssh
   tags:
     -  ssh
+
+- name: Deploy pam
+  hosts: pam
+  become: true
+  roles:
+    - pam
+  tags:
+    - pam
