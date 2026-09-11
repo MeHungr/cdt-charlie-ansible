@@ -17,3 +17,7 @@ The workgroup for the SMB server is SNOOPY and the share name is snoopy. The sha
 ```
 smbclient -W SNOOPY -U <USERNAME> //<IP_ADDRESS>/snoopy 
 ```
+
+## SSH / SSHD
+Author: Aria Shepard (als5265@rit.edu)
+Code for deploying SSH and SSHD, an SSH Peanuts themed banner, and creating a SSH alias. Located in the ansible/linux/roles/ssh directory.
