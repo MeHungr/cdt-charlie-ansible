@@ -48,5 +48,5 @@ ansible-playbook linux.yml -i <PATH TO INVENTORY FILE> -t pam
 ### Features demonstrated
 1. Package install + PAM stack config
 2. Password complexity policy via config templating
-3. Password aging policy
-4. Account lifecycle management - create/lock accounts
+3. Account lifecycle management - create/lock accounts
+4. Password aging policy
