@@ -8,13 +8,13 @@ pam_min_complexity_classes: 3
 pam_max_days: 90
 pam_warn_days: 7
 
-pam_accounts_present: []
+pam_accounts_present:
 # Example
 # pam_accounts_present:
 #   - defender1
 #   - defender2
 
-pam_accounts_locked: []
+pam_accounts_locked:
 # Example
 # pam_accounts_locked:
 #   - guest

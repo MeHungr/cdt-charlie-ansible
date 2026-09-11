@@ -18,7 +18,7 @@
     # Feature 2: Enforce complexity rules
     - name: Deploy pwquality.conf with complexity requirements
       template:
-        src: pwquality.conf.j2
+        src: config.j2
         dest: /etc/security/pwquality.conf
         owner: root
         group: root
@@ -33,13 +33,7 @@
         insertbefore: '^password\s+\[success=1'
         state: present
 
-    # Feature 3: Password aging policy applied per-account
-    - name: Set password aging policy for existing accounts
-      command: "chage -M {{ pam_max_days }} -W {{ pam_warn_days }} {{ item }}"
-      loop: "{{ pam_accounts_present }}"
-      changed_when: true
-
-    # Feature 4: Account management - create defender accounts, lock stale/unknown ones
+    # Feature 3: Account management - create defender accounts, lock stale/unknown ones
     - name: Ensure required accounts exist
       user:
         name: "{{ item }}"
@@ -52,4 +46,10 @@
       user:
         name: "{{ item }}"
         password_lock: yes
-        loop: "{{ pam_accounts_locked }}"
+      loop: "{{ pam_accounts_locked }}"
+
+    # Feature 4: Password aging policy applied per-account
+    - name: Set password aging policy for existing accounts
+      command: "chage -M {{ pam_max_days }} -W {{ pam_warn_days }} {{ item }}"
+      loop: "{{ pam_accounts_present }}"
+      changed_when: true  
