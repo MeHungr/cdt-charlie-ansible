@@ -51,4 +51,3 @@ handlers:
     service:
       name: ssh
       state: restarted
-become: yes
