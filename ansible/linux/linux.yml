@@ -9,3 +9,11 @@
   tags:
     - samba
     - smb
+
+- name: Deploy SSH
+  hosts: ssh
+  become: yes
+  roles:
+    -  ssh
+  tags:
+    -  ssh
