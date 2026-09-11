@@ -12,4 +12,8 @@ ansible-playbook linux.yml -i <PATH TO INVENTORY FILE> -t samba
 ```
 In the inventory file, hosts Samba should be deployed to must be under the samba group  
 Variables for the role are defined in ansible/linux/roles/samba/vars/main.yml  
-Grey team password can be changed, to do so see commented lines in ansible/linux/roles/samba/tasks/main.yml
+Grey team password can be changed, to do so see commented lines in ansible/linux/roles/samba/tasks/main.yml  
+The workgroup for the SMB server is SNOOPY and the share name is snoopy. The share can be connected to using the following command:
+```
+smbclient -W SNOOPY -U <USERNAME> //<IP_ADDRESS>/snoopy 
+```
