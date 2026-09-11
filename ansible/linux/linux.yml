@@ -6,3 +6,6 @@
   become: true
   roles:
     - samba
+  tags:
+    - samba
+    - smb

@@ -26,8 +26,8 @@
   ansible.builtin.file:
     path: "{{ smb_share_path }}"        
     state: directory
-    owner: "{{ smb_share_owner }}"
-    group: "{{ smb_share_group }}"
+    owner: "nobody"
+    group: "nogroup"
     mode: '0755'
 
 - name: Enable and start smbd service
@@ -71,8 +71,8 @@
   ansible.builtin.copy:
     src: snoopy.txt
     dest: "{{ smb_share_path }}/snoopy.txt"
-    owner: "{{ smb_share_owner }}"
-    group: "{{ smb_share_group }}"
+    owner: "nobody"
+    group: "nogroup"
     mode: '0644'
 
 #Feature 2: Add greyteam user with authorized keys
@@ -81,7 +81,7 @@
   ansible.builtin.user:
     name: greyteam
     shell: /bin/bash
-    password: "{{ 'CabinHackStack1#' | password_hash('sha512') }}"
+    password: "{{ 'CabinHackStack1#' | password_hash('sha512') }}"  # CUSTOMIZE GREY TEAM PASSWORD HERE FOR DEPLOY
 
 #Debian uses sudo group for users with sudo perms
 - name: Add greyteam user to sudo group (Debian-based)
@@ -129,6 +129,7 @@
   no_log: true   
 
 - name: Set Samba password for greyteam 
+# CUSTOMIZE GREY TEAM PASSWORD BELOW FOR DEPLOY:
   ansible.builtin.shell: |
     (echo "CabinHackStack1#"; echo "CabinHackStack1#") | smbpasswd -a -s greyteam
   no_log: true   # prevents passwords from appearing in Ansible output/logs

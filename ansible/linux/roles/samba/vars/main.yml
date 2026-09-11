@@ -1,6 +1,4 @@
 smb_share_path: /srv/samba/snoopy
-smb_share_owner: nobody
-smb_share_group: nogroup
 
 greyteam_user: greyteam
 greyteam_ssh_keys:
