@@ -23,7 +23,7 @@ The second play:
 - Adds all three users to the `Peanuts` group.
 - Creates `C:\Users\charlie.brown\charlie-brown.txt`.
 
-## Before Running
+## Before Official Use
 
 Update these values in `bennett-win-ad-dns.yml` for the target environment:
 
