@@ -49,9 +49,3 @@
          HostName 192.0.2.10
          User root
          Port 22
-
-handlers:
-  - name: restart ssh
-    service:
-      name: ssh
-      state: restarted
