@@ -4,14 +4,14 @@ This repo contains Team Charlie's Ansible and deployment information for Cyber D
 Please create a subdirectory for your service in the ansible>linux/windows directory.
 
 ## Apache
-Author: Dylan Weber (dmw7938@rit.edu)
-Code for deploying Docker and subsequently Apache is in the Apache role, located in ansible/linux/roles/apache
+Author: Dylan Weber (dmw7938@rit.edu)\
+Code for deploying Docker and subsequently Apache is in the Apache role, located in ansible/linux/roles/apache\
 To deploy this service, run the linux.yml playbook with the apache tag using the command:
 ```
 ansible-playbook linux.yml -i <PATH TO INVENTORY FILE> -t apache
 ```
-Within the inventory file, ensure targets of the apache tag are under the apache group
-Variables for the role are defined in ansible/linux/roles/apache/vars/main.yml
+Within the inventory file, ensure targets of the apache tag are under the apache group\
+Variables for the role are defined in ansible/linux/roles/apache/vars/main.yml\
 Files deployed are located in ansible/linux/roles/apache/files
 
 ## Samba
