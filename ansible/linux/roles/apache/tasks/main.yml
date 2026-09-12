@@ -210,3 +210,26 @@
     'Created' in apache_compose.stdout or
     'Started' in apache_compose.stdout or
     'Recreated' in apache_compose.stdout
+
+# ==========================================
+# ========= Verify container state =========
+# ==========================================
+# This verifies that the container was created and is currently running,
+# printing the status to the terminal
+
+# Uses docker compose ps to list running containers tied to the working directory (/opt/apache)
+# In effect, this tells us whether or not Apache is running
+- name: Check Apache container state
+  ansible.builtin.command:
+    cmd: docker compose ps
+    chdir: "{{ apache_dir }}"
+  # Saves output to apache_status variable
+  register: apache_status
+  # Tells ansible to never report a changed state (i.e., only shows ok or failed).
+  # This is only reading system information, so nothing will be changed
+  changed_when: false
+
+# Displays the Apache container state in the terminal
+- name: Display Apache container state
+  ansible.builtin.debug:
+    var: apache_status.stdout
