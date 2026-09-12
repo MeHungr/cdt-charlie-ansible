@@ -8,6 +8,7 @@
 # ==========================================
 # ======== Debian Docker Repository ========
 # ==========================================
+# This installs the official Docker repository on Debian-based Linux
 
 # Uninstall old/conflicting docker packages
 - name: Uninstall conflicting packages
@@ -60,6 +61,7 @@
 # ==========================================
 # ========= RHEL Docker Repository =========
 # ==========================================
+# This installs the official Docker repository on RHEL-based Linux
 
 # Uninstall old/conflicting Docker packages
 - name: Uninstall conflicting packages
@@ -91,3 +93,35 @@
 # ==========================================
 # ========== Docker Installation ===========
 # ==========================================
+# This will install the docker packages given by the Docker repo we
+# just installed. They are the same packages, but different package
+# managers are used, so we will need two tasks
+
+# Installs the Docker packages on Debian-based hosts
+- name: Install Docker on Debian
+  ansible.builtin.apt:
+    name: "{{ docker_official_packages }}"
+    state: present
+    update_cache: true
+  when: ansible_os_family == "Debian"
+
+# Installs the Docker packages on RHEL-based hosts
+- name: Install Docker on RedHat
+  ansible.builtin.dnf:
+    name: "{{ docker_official_packages }}"
+    state: present
+    update_cache: true
+  when: ansible_os_family == "RedHat"
+
+# ==========================================
+# ======== Enable the Docker service =======
+# ==========================================
+# This enables and starts the Docker service on all hosts.
+# Since systemd is universal on most Linux distributions,
+# this can be one task
+
+- name: Enable and start Docker service
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: restarted
