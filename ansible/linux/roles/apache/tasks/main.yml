@@ -9,7 +9,7 @@
 # ======== Debian Docker Repository ========
 # ==========================================
 
-# Uninstall any old docker packages
+# Uninstall old/conflicting docker packages
 - name: Uninstall conflicting packages
   ansible.builtin.apt:
     name: "{{ docker_unofficial_packages_debian }}"
@@ -61,6 +61,32 @@
 # ========= RHEL Docker Repository =========
 # ==========================================
 
+# Uninstall old/conflicting Docker packages
+- name: Uninstall conflicting packages
+  ansible.builtin.dnf:
+    name: "{{ docker_unofficial_packages_redhat }}"
+    state: absent
+    update_cache: true
+  when: ansible_os_family == "RedHat"
+
+# Install dnf-plugins-core to manage dnf repositories
+- name: Install dnf-plugins-core
+  ansible.builtin.dnf:
+    name: dnf-plugins-core
+    state: present
+    update_cache: true
+  when: ansible_os_family == "RedHat"
+
+# Add the Docker repository to dnf
+- name: Add the Docker repository on RHEL
+  ansible.builtin.yum_repository:
+    name: docker.ce
+    description: Docker CE Stable
+    baseurl: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/docker-ce.repo"
+    enabled: true
+    gpgcheck: true
+    gpgkey: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+  when: ansible_os_family == "RedHat"
 
 # ==========================================
 # ========== Docker Installation ===========

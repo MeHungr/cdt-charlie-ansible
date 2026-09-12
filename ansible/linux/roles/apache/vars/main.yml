@@ -5,7 +5,7 @@ docker_unofficial_packages_debian:
   - docker-buildx
   - podman-docker
 
-docker_unofficial_packages_rhel:
+docker_unofficial_packages_redhat:
   - docker-client
   - docker-client-latest
   - docker-common
