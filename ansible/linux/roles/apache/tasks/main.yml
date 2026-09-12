@@ -4,3 +4,52 @@
 # Date: 09/11/2026
 #
 # This playbook deploys and Apache web server in Docker
+
+# ==========================================
+# ======== Debian Docker Repository ========
+# ==========================================
+
+# Installs the prerequisite packages for adding the Docker repo
+- name: Install Docker repo prerequisites on Debian
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+    state: present
+    update_cache: true
+  when: ansible_os_family == "Debian"
+
+  # Creates the /etc/apt/keyrings directory
+- name: Create keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+  when: ansible_os_family == "Debian"
+
+  # Download the Docker GPG key
+- name: Download the Docker GPG key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: "0644"
+  when: ansible_os_family == "Debian"
+
+  # Adds the Docker repository to /etc/apt/sources.list.d
+  # ansible.builtin.apt_repository is deprecated in favor of the below module
+- name: Add Docker repository on Debian
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: deb
+    uris: "https://download.docker.com/linux/{{ ansible_distribution | lower }}"
+    suites: "{{ ansible_distribution_release }}"
+    components: stable
+    architectures: amd64
+    signed_by: /etc/apt/keyrings/docker.asc
+    state: present
+  when: ansible_os_family == "Debian"
+
+
+# ==========================================
+# ========== Docker Installation ===========
+# ==========================================
