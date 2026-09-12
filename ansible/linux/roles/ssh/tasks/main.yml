@@ -49,3 +49,9 @@
          HostName 192.0.2.10
          User root
          Port 22
+         
+#restart ssh for configuration changes to commit
+-   name: Restart SSH
+    service:
+       name: ssh
+       state: restarted
