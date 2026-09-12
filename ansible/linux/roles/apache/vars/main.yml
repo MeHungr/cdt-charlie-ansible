@@ -1,3 +1,5 @@
+# The unofficial docker packages provided by apt
+# These are recommended to be removed by Docker
 docker_unofficial_packages_debian:
   - docker.io
   - docker-compose
@@ -5,6 +7,8 @@ docker_unofficial_packages_debian:
   - docker-buildx
   - podman-docker
 
+# The unofficial docker packages provided by dnf
+# These are recommended to be removed by Docker
 docker_unofficial_packages_redhat:
   - docker-client
   - docker-client-latest
@@ -16,9 +20,14 @@ docker_unofficial_packages_redhat:
   - podman
   - runc
 
+# The official Docker packages to install once the
+# Docker repository is installed
 docker_official_packages:
   - docker-ce
   - docker-ce-cli
   - containerd.io
   - docker-buildx-plugin
   - docker-compose-plugin
+
+# The directory where we will deploy Apache
+apache_dir: /opt/apache

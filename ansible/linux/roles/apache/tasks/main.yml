@@ -125,3 +125,38 @@
     name: docker
     enabled: true
     state: restarted
+
+# ==========================================
+# ======== Create Apache directories =======
+# ==========================================
+# This creates the necessary directories for Docker to link the
+# host to the container and enable persistent data via Docker volumes
+
+# This loops through a list of directories to create all under /opt/apache
+# and creates them all
+- name: Create Apache deployment directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ apache_dir }}"
+    - "{{ apache_dir }}/html"
+    - "{{ apache_dir }}/conf"
+    - "{{ apache_dir }}/logs"
+
+# ==========================================
+# ================ Feature 1 ===============
+# ========== Deploy custom website =========
+# ==========================================
+# This deploys a custom html file to create a website related to our competition
+
+# Copies the files/index.html file into /opt/apache/html/index.html
+- name: Deploy custom Apache website
+  ansible.builtin.copy:
+    src: index.html
+    dest: "{{ apache_dir }}/html/index.html"
+    mode: "0644"
+
+
+
