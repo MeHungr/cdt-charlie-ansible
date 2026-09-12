@@ -9,6 +9,14 @@
 # ======== Debian Docker Repository ========
 # ==========================================
 
+# Uninstall any old docker packages
+- name: Uninstall conflicting packages
+  ansible.builtin.apt:
+    name: "{{ docker_unofficial_packages_debian }}"
+    state: absent
+    update_cache: true
+  when: ansible_os_family == "Debian"
+
 # Installs the prerequisite packages for adding the Docker repo
 - name: Install Docker repo prerequisites on Debian
   ansible.builtin.apt:
@@ -48,6 +56,10 @@
     signed_by: /etc/apt/keyrings/docker.asc
     state: present
   when: ansible_os_family == "Debian"
+
+# ==========================================
+# ========= RHEL Docker Repository =========
+# ==========================================
 
 
 # ==========================================
