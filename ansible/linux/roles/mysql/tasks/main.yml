@@ -1,3 +1,5 @@
+#community.mysql.mysql_db needs to be installed on the controller running ansible
+
 ---
 
 # install mysql
@@ -12,3 +14,9 @@
       name: "{{ mysql_service }}"
       state: started
       enabled: yes
+
+#Feature 1: add default db
+- name: Create default MySQL database
+  community.mysql.mysql_db:
+    name: "{{ mysql_database }}"
+    state: present
