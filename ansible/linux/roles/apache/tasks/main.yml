@@ -168,7 +168,7 @@
 - name: Deploy custom Apache configuration
   ansible.builtin.copy:
     src: httpd-custom.conf
-    dest: "{{ apache_dir }}/conf/httpd-custome.conf"
+    dest: "{{ apache_dir }}/conf/httpd-custom.conf"
     mode: "0644"
 
 # ==========================================
