@@ -164,11 +164,11 @@
 # ==========================================
 # This deploys a custom configuration file to manage the configuration of Apache
 
-# Copies files/httpd-custom.conf into /opt/apache/conf/httpd.conf
+# Copies files/httpd-custom.conf into /opt/apache/conf/httpd-custom.conf
 - name: Deploy custom Apache configuration
   ansible.builtin.copy:
     src: httpd-custom.conf
-    dest: "{{ apache_dir }}/conf/httpd.conf"
+    dest: "{{ apache_dir }}/conf/httpd-custome.conf"
     mode: "0644"
 
 # ==========================================
