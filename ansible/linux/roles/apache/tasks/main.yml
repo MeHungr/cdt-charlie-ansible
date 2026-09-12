@@ -1,1 +1,6 @@
-# main.yml
+--- 
+# Apache via Docker
+# Author: Dylan Weber (dmw7938@rit.edu)
+# Date: 09/11/2026
+#
+# This playbook deploys and Apache web server in Docker
