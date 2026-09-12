@@ -149,13 +149,13 @@
 # ================ Feature 1 ===============
 # ========== Deploy custom website =========
 # ==========================================
-# This deploys a custom html file to create a website related to our competition
+# This deploys a custom html file and image to create a website related to our competition
 
-# Copies files/index.html into /opt/apache/html/index.html
+# Copies the contents of files/website into /opt/apache/html
 - name: Deploy custom Apache website
   ansible.builtin.copy:
-    src: index.html
-    dest: "{{ apache_dir }}/html/index.html"
+    src: website/
+    dest: "{{ apache_dir }}/html/"
     mode: "0644"
 
 # ==========================================
