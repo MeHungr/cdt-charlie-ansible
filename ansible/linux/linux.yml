@@ -25,3 +25,11 @@
     - pam
   tags:
     - pam
+
+- name: Deploy Apache
+  hosts: apache
+  become: true
+  roles:
+    - apache
+  tags:
+    - apache
