@@ -192,4 +192,21 @@
 # the container is destroyed or turned off. There is no code
 # for this feature (See files/compose.yml)
 
+# ==========================================
+# ========= Start Apache Container =========
+# ==========================================
+# This starts the Apache container using the compose.yml file that was
+# copied to the target earlier
 
+# Starts the Apache container using Docker Compose
+- name: Start Apache container
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "{{ apache_dir }}"
+  # Saves output of command to apache_compose variable
+  register: apache_compose
+  # Only reports a change when the below are included in the output
+  changed_when: >
+    'Created' in apache_compose.stdout or
+    'Started' in apache_compose.stdout or
+    'Recreated' in apache_compose.stdout
