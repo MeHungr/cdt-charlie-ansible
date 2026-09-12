@@ -20,3 +20,13 @@
   community.mysql.mysql_db:
     name: "{{ mysql_database }}"
     state: present
+
+#Feature 2: Create low priv user and their perms
+# Feature 2: Create low-privilege read-only user
+- name: Create low-privilege MySQL user
+  community.mysql.mysql_user:
+    name: "{{ mysql_low_user }}"
+    password: "{{ mysql_low_password }}"
+    priv: "{{ mysql_database }}.*:SELECT"
+    state: present
+

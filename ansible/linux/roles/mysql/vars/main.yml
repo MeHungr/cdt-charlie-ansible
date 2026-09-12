@@ -2,5 +2,9 @@
 mysql_package: mysql-server
 mysql_service: mysql
 
-#create variable for the defualt database
+# Feature 1 var create variable for the defualt database
 mysql_database: competition_db
+
+# Feature 2 var Low-privilege user
+mysql_low_user: low_user
+mysql_low_password: lowpassword
