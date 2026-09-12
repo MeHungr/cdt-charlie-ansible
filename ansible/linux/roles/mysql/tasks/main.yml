@@ -1,0 +1,14 @@
+---
+
+# install mysql
+-   name: Install mysql
+    ansible.builtin.apt:
+      name: {{ "mysql-package" }}
+      state: present
+
+#start mysql service
+  - name: Start mysql service
+    ansible.builtin.service:
+      name: "{{ mysql_service }}"
+      state: started
+      enabled: yes
