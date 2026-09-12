@@ -151,12 +151,45 @@
 # ==========================================
 # This deploys a custom html file to create a website related to our competition
 
-# Copies the files/index.html file into /opt/apache/html/index.html
+# Copies files/index.html into /opt/apache/html/index.html
 - name: Deploy custom Apache website
   ansible.builtin.copy:
     src: index.html
     dest: "{{ apache_dir }}/html/index.html"
     mode: "0644"
 
+# ==========================================
+# =============== Feature 2 ================
+# ====== Custom Apache configuration =======
+# ==========================================
+# This deploys a custom configuration file to manage the configuration of Apache
+
+# Copies files/httpd-custom.conf into /opt/apache/conf/httpd.conf
+- name: Deploy custom Apache configuration
+  ansible.builtin.copy:
+    src: httpd-custom.conf
+    dest: "{{ apache_dir }}/conf/httpd.conf"
+    mode: "0644"
+
+# ==========================================
+# ======= Deploy Docker Compose file =======
+# ==========================================
+# This deploys a Docker Compose file to easily deploy Apache on the server
+
+# Copies files/compose.yml into /opt/apache/compose.yml
+- name: Deploy Docker Compose configuration
+  ansible.builtin.copy:
+    src: compose.yml
+    dest: "{{ apache_dir }}/compose.yml"
+    mode: "0644"
+
+# ==========================================
+# =============== Feature 3 ================
+# ======== Persistent Apache logs ==========
+# ==========================================
+# Within the compose.yml file, there is a volume created
+# for logs. This allows logs to persist on the host even when
+# the container is destroyed or turned off. There is no code
+# for this feature (See files/compose.yml)
 
 
