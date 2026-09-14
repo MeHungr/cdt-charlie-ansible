@@ -61,3 +61,13 @@ ansible-playbook linux.yml -i <PATH TO INVENTORY FILE> -t pam
 2. Password complexity policy via config templating
 3. Account lifecycle management - create/lock accounts
 4. Password aging policy
+
+## Telnet
+Author: Nathan Peck (nsp7941@rit.edu)
+Code for deploying the Telnet service is in the telnet role, located in ansible/linux/roles/telnet directory
+To deploy, run the linux.yml playbook for the tag telnet, using the command:
+```
+ansible-playbook linux.yml -i <PATH TO INVENTORY FILE> -t telnet
+```
+In the inventory file, hosts telnet should be deployed to must be under the telnet group
+Variables for the role are defined in ansible/linux/roles/telnet/vars/main.yml
